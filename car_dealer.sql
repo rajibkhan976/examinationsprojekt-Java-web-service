@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2020 at 05:39 PM
+-- Generation Time: Nov 13, 2020 at 11:34 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.4
 
@@ -43,6 +43,23 @@ CREATE TABLE `car` (
 INSERT INTO `car` (`id`, `brand`, `model`, `year_model`, `weight`, `num_of_seats`, `equipment`) VALUES
 ('BAN-4655-38-2606', 'Toyota', '123-456-BAN', 2020123456, 1000, 4, 'engine, tanker, gear box, wheel');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` varchar(255) NOT NULL,
+  `birthdate` date DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
@@ -53,6 +70,12 @@ INSERT INTO `car` (`id`, `brand`, `model`, `year_model`, `weight`, `num_of_seats
 ALTER TABLE `car`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `year_model` (`year_model`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

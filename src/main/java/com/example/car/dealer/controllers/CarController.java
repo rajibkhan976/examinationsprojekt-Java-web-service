@@ -5,6 +5,7 @@ import com.example.car.dealer.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,21 +19,25 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+    @Secured({"ROLE_ADMIN", "ROLE_EDITOR", "ROLE_USER"})
     @GetMapping("")
-    public ResponseEntity<List<Car>> findAllCars() {
-        return ResponseEntity.ok(carService.getAllCar());
+    public ResponseEntity<List<Car>> findAllCars(@RequestParam(required = false) String brand, @RequestParam(required = false) String model, @RequestParam(required = false) boolean sortByYear_Model) {
+        return ResponseEntity.ok(carService.getAllCar(brand, model, sortByYear_Model));
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_EDITOR"})
     @GetMapping("/{id}")
     public ResponseEntity<Car> findCarById(@PathVariable String id) {
         return ResponseEntity.ok(carService.getCarByID(id));
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("")
     public ResponseEntity<Car> addCar(@Validated @RequestBody Car car) {
         return ResponseEntity.ok(carService.saveCar(car));
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_EDITOR"})
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCarById(@Validated @RequestBody Car car, @PathVariable String id) {
         try {
@@ -45,6 +50,7 @@ public class CarController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCarById(@PathVariable String id) {
